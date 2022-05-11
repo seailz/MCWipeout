@@ -1,0 +1,10 @@
+name: MCWipeout
+version: 1.0
+author: Aylias
+main: me.aylias.plugins.j48.wipeout.Main
+api-version: 1.17
+commands:
+  wipeout:
+    usage: /wipeout player
+  mcw_teams:
+    usage: /mcw_teams
