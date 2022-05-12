@@ -98,7 +98,6 @@ TeamHandler implements CommandExecutor, TabCompleter, Listener {
         // fix trying to add a player to a non-existent team.
         if (teams.isEmpty()) return;
         teams.get(0).players.add(e.getPlayer());
-
     }
 
     public boolean sendTeamMessage(Player player, String message) {
