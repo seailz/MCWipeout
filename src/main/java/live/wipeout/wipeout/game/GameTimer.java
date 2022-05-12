@@ -1,6 +1,8 @@
 package live.wipeout.wipeout.game;
 
 import lombok.Getter;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -18,19 +20,29 @@ public class GameTimer extends BukkitRunnable {
         ticks++;
 
         if (ticks % songTicks == 0 || ticks == 1) {
+
+            // Sound handling
             Bukkit.getServer().getOnlinePlayers().forEach(p -> {
 //                p.sendMessage("glkuishfuhdlgkhsdf ");
                 p.stopAllSounds();
 //                p.setOp(true);
 //                Bukkit.dispatchCommand(p, "playsound mcw:mcw.sfx.songloop ambient @s");
 //                p.setOp(false);
-                p.playSound(p.getLocation(), "mcw:mcw.sfx.songloop", 1, 1);
+                // Play an "ambient" sound to everyone, meaning they're gonna be able to hear it from wherever they are in the map
+                p.playSound(p.getLocation(), "mcw:mcw.sfx.songloop", Integer.MAX_VALUE, 1);
             });
         }
 
 //        if (ticks % 3 != 0) return;
 
-        Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), "title @a actionbar \"" + ChatColor.GREEN + getTime() + '"');
+        // Show the time of the participant to everyone
+        Bukkit.getServer().getWorld("world").getPlayers().forEach(player -> {
+            String timeActionBar = ChatColor.GREEN + getTime();
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(timeActionBar));
+        });
+
+        // Old actionbar message that didn't work unfortunately
+        //Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), "title @a actionbar \"" + ChatColor.GREEN + getTime() + '"');
     }
 
     public String getTime() {

@@ -3,6 +3,7 @@ package live.wipeout.wipeout.game;
 import live.wipeout.wipeout.Main;
 import lombok.Getter;
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -71,15 +72,17 @@ public class Game implements Listener {
         if (getParticipants() == null) return;
         if (!getParticipants().contains(e.getPlayer())) return;
 
-        if (!started)
+        if (!started) return;
 
-        if (e.getPlayer().getWorld().getBlockAt(e.getPlayer().getLocation().clone().add(0, -1, 0)).getType().equals(Material.WHITE_STAINED_GLASS))
+
+        Block blockUnderPlayer = e.getPlayer().getWorld().getBlockAt(e.getPlayer().getLocation().add(0, -1, 0));
+        if (blockUnderPlayer.getType().equals(Material.WHITE_STAINED_GLASS))
             lastCP = e.getPlayer().getLocation().clone();
 
-        if (e.getPlayer().getWorld().getBlockAt(e.getPlayer().getLocation().clone().add(0, -1, 0)).getType().equals(Material.BLACK_STAINED_GLASS))
+        if (blockUnderPlayer.getType().equals(Material.BLACK_STAINED_GLASS))
             e.getPlayer().teleport(lastCP);
 
-        if (e.getPlayer().getWorld().getBlockAt(e.getPlayer().getLocation().clone().add(0, -1, 0)).getType().equals(Material.YELLOW_CONCRETE) && running) {
+        if (blockUnderPlayer.getType().equals(Material.YELLOW_CONCRETE) && running) {
             getGameTimer().cancel();
             long ticks = getGameTimer().getTicks();
 

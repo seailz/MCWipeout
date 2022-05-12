@@ -123,6 +123,14 @@ TeamHandler implements CommandExecutor, TabCompleter, Listener {
                 return true;
             }
 
+            // /mcw_teams empty <teamName>
+            if (args[0].equalsIgnoreCase("empty")) {
+                if (args.length <= 1) return true;
+                String teamToEmpty = args[1];
+                commandEmptyTeam(teamToEmpty, sender);
+                return true;
+            }
+
             if (args[0].equalsIgnoreCase("start")) {
                 Bukkit.getOnlinePlayers().forEach(p ->
                         p.teleport(new Location(Bukkit.getWorld("world"), -465, 98, -19)));
@@ -208,15 +216,21 @@ TeamHandler implements CommandExecutor, TabCompleter, Listener {
             values.add("create");
             values.add("add");
             values.add("start");
+            values.add("empty");
         }
 
         if (args.length == 2) {
             if (args[0].equalsIgnoreCase("add")) {
                 teams.forEach(team -> values.add(team.name));
-            } else if (args[0].equalsIgnoreCase("create")) {
+            }
+            else if (args[0].equalsIgnoreCase("create")) {
                 for (CommandColors value : CommandColors.values()) {
                     values.add(value.colorName);
                 }
+            }
+            else if (args[0].equalsIgnoreCase("empty")) {
+                // /mcw_teams empty <TeamName>
+                teams.forEach(team -> values.add(team.name));
             }
         }
 
@@ -224,6 +238,54 @@ TeamHandler implements CommandExecutor, TabCompleter, Listener {
             Bukkit.getOnlinePlayers().forEach(p -> values.add(p.getName()));
 
         return values;
+    }
+
+    /**
+     * Empties the inputed team
+     */
+    public void commandEmptyTeam(String teamToEmpty, CommandSender sender)
+    {
+        if (!doesTeamExist(teamToEmpty))
+            sender.sendMessage(ChatColor.RED + "The inputed team doesn't exist.");
+
+        // Empty the team
+        CustomTeam customTeamToEmpty = getTeamByName(teamToEmpty);
+        customTeamToEmpty.players.clear();
+
+        // Player feedback message
+        String msg = "Successfully removed every player from team " + customTeamToEmpty.name;
+        sender.sendMessage(ChatColor.GREEN + msg);
+    }
+
+    /**
+     *
+     * @param teamName
+     * @return true if the inputed teamName is the name of a currently existing team.
+     */
+    public boolean doesTeamExist(String teamName)
+    {
+        for (CustomTeam team : teams)
+        {
+            if (team.name.equalsIgnoreCase(teamName))
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @param teamName
+     * @return the {@code CustomTeam} with the inputed name. Returns null if it doesn't exist.
+     */
+    public CustomTeam getTeamByName(String teamName)
+    {
+        for (CustomTeam team : teams)
+        {
+            if (team.name.equalsIgnoreCase(teamName))
+                return team;
+        }
+
+        return null;
     }
 
     public static class CustomTeam {
