@@ -15,27 +15,29 @@ import java.util.ArrayList;
 @Getter
 public class Game implements Listener {
 
-    private Player participant;
-    public GameTimer gameTimer = new GameTimer();
+    private ArrayList<Player> participants;
+    private GameTimer gameTimer = new GameTimer();
     Location startLoc;
     ArrayList<Location> checkpoints = new ArrayList<>();
     Location lastCP;
     boolean running = true;
     boolean started = false;
 
-    public void start(Player participant, FileConfiguration config) {
-        participant.getWorld().setGameRule(GameRule.SEND_COMMAND_FEEDBACK, false);
+    public void start(ArrayList<Player> participants, FileConfiguration config) {
+        participants.forEach(p -> {
+            p.getWorld().setGameRule(GameRule.SEND_COMMAND_FEEDBACK, false);
+        });
 
         gameTimer.runTaskTimer(Main.getPlugin(Main.class), 1, 1);
 
-        this.participant = participant;
+        this.participants = participants;
 
         int x = config.getInt("start.x");
         int y = config.getInt("start.y");
         int z = config.getInt("start.z");
         int yaw = config.getInt("start.yaw");
 
-        startLoc = new Location(participant.getWorld(), x, y, z, yaw, 0);
+        startLoc = new Location(participants.get(0).getWorld(), x, y, z, yaw, 0);
 
 //        for (int i = 0; i < 100; i++) {
 //            var path = "checkpoints." + i;
@@ -52,32 +54,34 @@ public class Game implements Listener {
 //        System.out.println(startLoc);
 
         lastCP = startLoc;
-        participant.teleport(startLoc);
+        participants.forEach(p -> {
+            p.teleport(startLoc);
+        });
     }
 
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent e) {
-        if (e.getPlayer().equals(participant)) {
+        if (getParticipants().contains(e.getPlayer())) {
             Main.getPlugin(Main.class).cancelGame();
         }
     }
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent e) {
-        if (participant == null) return;
-        if (!e.getPlayer().equals(participant)) return;
+        if (getParticipants() == null) return;
+        if (!getParticipants().contains(e.getPlayer())) return;
 
         if (!started)
 
-        if (participant.getWorld().getBlockAt(participant.getLocation().clone().add(0, -1, 0)).getType().equals(Material.WHITE_STAINED_GLASS))
-            lastCP = participant.getLocation().clone();
+        if (e.getPlayer().getWorld().getBlockAt(e.getPlayer().getLocation().clone().add(0, -1, 0)).getType().equals(Material.WHITE_STAINED_GLASS))
+            lastCP = e.getPlayer().getLocation().clone();
 
-        if (participant.getWorld().getBlockAt(participant.getLocation().clone().add(0, -1, 0)).getType().equals(Material.BLACK_STAINED_GLASS))
-            participant.teleport(lastCP);
+        if (e.getPlayer().getWorld().getBlockAt(e.getPlayer().getLocation().clone().add(0, -1, 0)).getType().equals(Material.BLACK_STAINED_GLASS))
+            e.getPlayer().teleport(lastCP);
 
-        if (participant.getWorld().getBlockAt(participant.getLocation().clone().add(0, -1, 0)).getType().equals(Material.YELLOW_CONCRETE) && running) {
-            gameTimer.cancel();
-            long ticks = gameTimer.ticks;
+        if (e.getPlayer().getWorld().getBlockAt(e.getPlayer().getLocation().clone().add(0, -1, 0)).getType().equals(Material.YELLOW_CONCRETE) && running) {
+            getGameTimer().cancel();
+            long ticks = getGameTimer().getTicks();
 
             Long nticks = ticks % 20;
             long seconds = (ticks - nticks) / 20;

@@ -53,7 +53,7 @@ public class Main extends JavaPlugin {
 
             if (game != null) {
                 HandlerList.unregisterAll(game);
-                game.gameTimer.cancel();
+                game.getGameTimer().cancel();
             }
 
             game = null;
@@ -70,7 +70,7 @@ public class Main extends JavaPlugin {
     public void cancelGame() {
         if (game != null) {
             HandlerList.unregisterAll(game);
-            game.gameTimer.cancel();
+            game.getGameTimer().cancel();
         }
 
         game = null;
