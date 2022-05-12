@@ -1,10 +1,8 @@
-package me.aylias.plugins.j48.wipeout;
+package live.wipeout.wipeout;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -76,7 +74,7 @@ public class TeamHandler implements CommandExecutor, TabCompleter, Listener {
 
     @EventHandler
     public void playerMove(PlayerMoveEvent e) {
-        var p = e.getPlayer();
+        Player p = e.getPlayer();
 
         teams.forEach(team -> {
             if (team.players.contains(p)) {
@@ -146,7 +144,7 @@ public class TeamHandler implements CommandExecutor, TabCompleter, Listener {
         ArrayList<String> failed = new ArrayList<>();
 
         for (int i = 2; i < args.length; i++) {
-            var p = Bukkit.getPlayer(args[i]);
+            Player p = Bukkit.getPlayer(args[i]);
             if (p == null) {
                 failed.add(args[i]);
                 continue;
@@ -165,9 +163,9 @@ public class TeamHandler implements CommandExecutor, TabCompleter, Listener {
             }
         }
 
-        var msg = "Succesfully added " + ChatColor.GREEN;
-        var del = ChatColor.WHITE + ", " + ChatColor.GREEN;
-        var conv = new ArrayList<String>();
+        String msg = "Succesfully added " + ChatColor.GREEN;
+        String del = ChatColor.WHITE + ", " + ChatColor.GREEN;
+        ArrayList<String> conv = new ArrayList<>();
         success.forEach(p -> conv.add(p.getName()));
 
         msg += String.join(del, conv);

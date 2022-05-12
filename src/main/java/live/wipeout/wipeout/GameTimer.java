@@ -1,4 +1,4 @@
-package me.aylias.plugins.j48.wipeout;
+package live.wipeout.wipeout;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
