@@ -1,5 +1,7 @@
-package live.wipeout.wipeout;
+package live.wipeout.wipeout.game.team;
 
+import live.wipeout.wipeout.Main;
+import live.wipeout.wipeout.game.Checkpoint;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -20,7 +22,8 @@ import org.bukkit.scoreboard.Team;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TeamHandler implements CommandExecutor, TabCompleter, Listener {
+public class
+TeamHandler implements CommandExecutor, TabCompleter, Listener {
 
     List<CustomTeam> teams = new ArrayList<>();
 

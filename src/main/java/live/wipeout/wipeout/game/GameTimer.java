@@ -1,4 +1,4 @@
-package live.wipeout.wipeout;
+package live.wipeout.wipeout.game;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
