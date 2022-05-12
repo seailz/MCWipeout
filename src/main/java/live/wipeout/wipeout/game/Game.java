@@ -1,5 +1,7 @@
-package live.wipeout.wipeout;
+package live.wipeout.wipeout.game;
 
+import live.wipeout.wipeout.Main;
+import lombok.Getter;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -10,18 +12,14 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.ArrayList;
 
+@Getter
 public class Game implements Listener {
 
     private Player participant;
-
-    GameTimer gameTimer = new GameTimer();
-
+    public GameTimer gameTimer = new GameTimer();
     Location startLoc;
-
     ArrayList<Location> checkpoints = new ArrayList<>();
-
     Location lastCP;
-
     boolean running = true;
     boolean started = false;
 

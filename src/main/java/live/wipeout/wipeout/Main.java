@@ -1,5 +1,7 @@
 package live.wipeout.wipeout;
 
+import live.wipeout.wipeout.game.Game;
+import live.wipeout.wipeout.game.team.TeamHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

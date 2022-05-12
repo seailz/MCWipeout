@@ -1,5 +1,6 @@
-package live.wipeout.wipeout;
+package live.wipeout.wipeout.game;
 
+import live.wipeout.wipeout.game.team.TeamHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
