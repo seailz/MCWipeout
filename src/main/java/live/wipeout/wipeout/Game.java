@@ -1,4 +1,4 @@
-package me.aylias.plugins.j48.wipeout;
+package live.wipeout.wipeout;
 
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -32,10 +32,10 @@ public class Game implements Listener {
 
         this.participant = participant;
 
-        var x = config.getInt("start.x");
-        var y = config.getInt("start.y");
-        var z = config.getInt("start.z");
-        var yaw = config.getInt("start.yaw");
+        int x = config.getInt("start.x");
+        int y = config.getInt("start.y");
+        int z = config.getInt("start.z");
+        int yaw = config.getInt("start.yaw");
 
         startLoc = new Location(participant.getWorld(), x, y, z, yaw, 0);
 
@@ -79,7 +79,7 @@ public class Game implements Listener {
 
         if (participant.getWorld().getBlockAt(participant.getLocation().clone().add(0, -1, 0)).getType().equals(Material.YELLOW_CONCRETE) && running) {
             gameTimer.cancel();
-            var ticks = gameTimer.ticks;
+            long ticks = gameTimer.ticks;
 
             Long nticks = ticks % 20;
             long seconds = (ticks - nticks) / 20;

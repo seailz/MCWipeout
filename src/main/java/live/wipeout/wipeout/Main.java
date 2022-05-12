@@ -1,4 +1,4 @@
-package me.aylias.plugins.j48.wipeout;
+package live.wipeout.wipeout;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -43,7 +43,7 @@ public class Main extends JavaPlugin {
                 return true;
             }
 
-            var player = Bukkit.getPlayer(args[0]);
+            Player player = Bukkit.getPlayer(args[0]);
             if (player == null) {
                 sender.sendMessage(ChatColor.RED + args[0] + " is not a valid player");
                 return true;
