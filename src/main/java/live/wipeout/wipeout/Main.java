@@ -59,7 +59,7 @@ public class Main extends JavaPlugin {
             game = null;
 
             game = new Game();
-            game.start(player, getConfig());
+            // TODO: game.start(player, getConfig());
 
             getServer().getPluginManager().registerEvents(game, this);
         }
