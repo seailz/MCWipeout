@@ -1,15 +1,17 @@
 package live.wipeout.wipeout.game;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+@Getter
 public class GameTimer extends BukkitRunnable {
 
-    long ticks = 0;
-    long songTicks = 1486;
+    private long ticks = 0;
+    private long songTicks = 1486;
 
     @Override
     public void run() {
