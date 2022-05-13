@@ -1,6 +1,6 @@
 package live.wipeout.wipeout.game;
 
-import live.wipeout.wipeout.game.team.TeamHandler;
+import live.wipeout.wipeout.game.team.CustomTeam;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -16,7 +16,7 @@ public class Checkpoint {
 
     int index = 0;
 
-    List<TeamHandler.CustomTeam> passed = new ArrayList<TeamHandler.CustomTeam>();
+    List<CustomTeam> passed = new ArrayList<CustomTeam>();
 
     public Checkpoint(Location location, Integer[] points, int defaultPoints) {
         this.location = location;
@@ -24,7 +24,7 @@ public class Checkpoint {
         this.defaultPoints = defaultPoints;
     }
 
-    public void register(Location location, TeamHandler.CustomTeam team) {
+    public void register(Location location, CustomTeam team) {
         if (passed.contains(team)) return;
         if (location.distance(this.location) > 3) return;
 
